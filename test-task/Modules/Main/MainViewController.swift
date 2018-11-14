@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
 
     @IBAction func openCamera(_ sender: UIButton) {
         guard checkCameraPermission() else {
-            // TODO: - show camera desctiption alert
+            showCameraAccessAlert()
             return
         }
     }
@@ -30,8 +30,15 @@ class MainViewController: UIViewController {
     
     private func requestCameraAccess() {
         AVCaptureDevice.requestAccess(for: .video) { (access) in
-            print("camera access: - \(access)")
-            // TODO: - show camera desctiption alert
+            if !access {
+                self.showCameraAccessAlert()
+            }
         }
+    }
+    
+    private func showCameraAccessAlert() {
+        let alert = UIAlertController(title: "Ошибка", message: "Разрешите приложению доступ к камере в настройках приложения", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
