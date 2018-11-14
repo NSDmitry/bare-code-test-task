@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
+    
+    private var video = AVCaptureVideoPreviewLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,32 @@ class MainViewController: UIViewController {
             showCameraAccessAlert()
             return
         }
+        
+        startRecordingQR()
+    }
+    
+    private func startRecordingQR() {
+        let session = AVCaptureSession()
+        let captureDevice = AVCaptureDevice.default(for: .video)
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice!)
+            session.addInput(input)
+        } catch {
+            print("error")
+            // TODO: - add alert for error capture
+        }
+        
+        let output = AVCaptureMetadataOutput()
+        session.addOutput(output)
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        output.metadataObjectTypes = [.qr]
+        
+        video = AVCaptureVideoPreviewLayer(session: session)
+        video.frame = view.layer.bounds
+        view.layer.addSublayer(video)
+        
+        session.startRunning()
     }
     
     private func checkCameraPermission() -> Bool {
@@ -41,4 +69,8 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+}
+
+extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
+    
 }
