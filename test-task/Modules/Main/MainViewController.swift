@@ -9,9 +9,13 @@
 import UIKit
 
 class MainViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("hello world")
+    }
+    @IBAction func openCamera(_ sender: UIButton) {
+        print("camera tapped")
     }
 }
