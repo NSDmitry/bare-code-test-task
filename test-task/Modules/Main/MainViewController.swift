@@ -7,15 +7,31 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("hello world")
+        requestCameraAccess()
     }
+
     @IBAction func openCamera(_ sender: UIButton) {
-        print("camera tapped")
+        guard checkCameraPermission() else {
+            // TODO: - show camera desctiption alert
+            return
+        }
+    }
+    
+    private func checkCameraPermission() -> Bool {
+        return AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized
+    }
+    
+    private func requestCameraAccess() {
+        AVCaptureDevice.requestAccess(for: .video) { (access) in
+            print("camera access: - \(access)")
+            // TODO: - show camera desctiption alert
+        }
     }
 }
