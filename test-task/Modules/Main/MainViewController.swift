@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
         let output = AVCaptureMetadataOutput()
         session.addOutput(output)
         output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        output.metadataObjectTypes = [.qr]
+        output.metadataObjectTypes = [.qr, .ean8, .ean13, .pdf417, .code128, .code39]
         
         video = AVCaptureVideoPreviewLayer(session: session)
         video.frame = view.layer.bounds
@@ -72,5 +72,13 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
-    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        guard !metadataObjects.isEmpty,
+            let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
+            let qrCode = object.stringValue else {
+                return
+        }
+
+        print(qrCode)
+    }
 }
