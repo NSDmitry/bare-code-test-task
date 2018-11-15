@@ -80,5 +80,6 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
         }
 
         print(qrCode)
+        print(object.type)
     }
 }
