@@ -12,11 +12,14 @@ import AVFoundation
 class MainViewController: UIViewController {
     
     private var video = AVCaptureVideoPreviewLayer()
+    private var qrCodeReader: QRCodeReader?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         requestCameraAccess()
+        qrCodeReader = QRCodeReader(view: self.view)
+        qrCodeReader?.delegate = self
     }
 
     @IBAction func openCamera(_ sender: UIButton) {
@@ -25,31 +28,7 @@ class MainViewController: UIViewController {
             return
         }
         
-        startRecordingQR()
-    }
-    
-    private func startRecordingQR() {
-        let session = AVCaptureSession()
-        let captureDevice = AVCaptureDevice.default(for: .video)
-        
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice!)
-            session.addInput(input)
-        } catch {
-            print("error")
-            // TODO: - add alert for error capture
-        }
-        
-        let output = AVCaptureMetadataOutput()
-        session.addOutput(output)
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        output.metadataObjectTypes = [.qr, .ean8, .ean13, .pdf417, .code128, .code39]
-        
-        video = AVCaptureVideoPreviewLayer(session: session)
-        video.frame = view.layer.bounds
-        view.layer.addSublayer(video)
-        
-        session.startRunning()
+        qrCodeReader?.startRecordingQR()
     }
     
     private func checkCameraPermission() -> Bool {
@@ -71,15 +50,8 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        guard !metadataObjects.isEmpty,
-            let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
-            let qrCode = object.stringValue else {
-                return
-        }
-
+extension MainViewController: QRCodeReaderDeleagte {
+    func getQRCode(qrCode: String) {
         print(qrCode)
-        print(object.type)
     }
 }
