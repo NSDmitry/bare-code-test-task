@@ -70,8 +70,9 @@ extension MainViewController: QRCodeReaderDeleagte {
             }
             
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            print(responseJSON ?? "хуйня какая то пришла")
-//            if let json = respo
+            if let json = responseJSON as? [String: Any] {
+                print(json)
+            }
         }
         
         task.resume()

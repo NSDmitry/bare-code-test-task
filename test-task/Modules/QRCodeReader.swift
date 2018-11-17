@@ -24,25 +24,28 @@ protocol QRCodeReaderProtocol {
 class QRCodeReader: NSObject, QRCodeReaderProtocol {
     var delegate: QRCodeReaderDeleagte?
     
-    private var video = AVCaptureVideoPreviewLayer()
-    private let session = AVCaptureSession()
+    private var video: AVCaptureVideoPreviewLayer?
+    private var session: AVCaptureSession?
     
     func startRecording(in view: UIView) {
-        let captureDevice = AVCaptureDevice.default(for: .video)
+        let session = AVCaptureSession()
+        self.session = session
         
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice!)
-            session.addInput(input)
-        } catch {
+        guard let captureDevice = AVCaptureDevice.default(for: .video), let input = try? AVCaptureDeviceInput(device: captureDevice) else {
             delegate?.showError()
+            return
         }
         
+        session.addInput(input)
+
         let output = AVCaptureMetadataOutput()
         session.addOutput(output)
         output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
         output.metadataObjectTypes = [.qr, .ean8, .ean13, .pdf417, .code128, .code39]
         
-        video = AVCaptureVideoPreviewLayer(session: session)
+        let video = AVCaptureVideoPreviewLayer(session: session)
+        self.video = video
+        
         video.frame = view.layer.bounds
         view.layer.addSublayer(video)
         
@@ -50,8 +53,11 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
     }
     
     func stopRecording() {
-        session.stopRunning()
-        video.removeFromSuperlayer()
+        session?.stopRunning()
+        video?.removeFromSuperlayer()
+        
+        session = nil
+        video = nil
     }
 }
 
