@@ -46,6 +46,12 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    private func showQRReaderError() {
+        let alert = UIAlertController(title: "Ошибка", message: "Ошибка чтения QR, попробуйте позже", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController: QRCodeReaderDeleagte {
@@ -54,6 +60,6 @@ extension MainViewController: QRCodeReaderDeleagte {
     }
     
     func showError() {
-        // TODO: - show camera error
+        showQRReaderError()
     }
 }
