@@ -13,6 +13,7 @@
 		8496D9DD219C5505000FFA72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8496D9DB219C5505000FFA72 /* LaunchScreen.storyboard */; };
 		8496D9EB219C599A000FFA72 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D9E9219C599A000FFA72 /* MainViewController.swift */; };
 		8496D9EC219C599A000FFA72 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8496D9EA219C599A000FFA72 /* MainViewController.xib */; };
+		84AE581C21A0415200B3B84D /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AE581B21A0415200B3B84D /* AlertFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		8496D9DE219C5505000FFA72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8496D9E9219C599A000FFA72 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8496D9EA219C599A000FFA72 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		84AE581B21A0415200B3B84D /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		8496D9E4219C55D7000FFA72 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				84AE581B21A0415200B3B84D /* AlertFactory.swift */,
 				2A52E820219EB8C100BBE10B /* QRCodeReader.swift */,
 				8496D9E5219C55E0000FFA72 /* Main */,
 			);
@@ -163,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8496D9D3219C5502000FFA72 /* AppDelegate.swift in Sources */,
+				84AE581C21A0415200B3B84D /* AlertFactory.swift in Sources */,
 				2A52E821219EB8C100BBE10B /* QRCodeReader.swift in Sources */,
 				8496D9EB219C599A000FFA72 /* MainViewController.swift in Sources */,
 			);

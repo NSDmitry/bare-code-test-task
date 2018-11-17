@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
 
     @IBAction func openCamera(_ sender: UIButton) {
         guard checkCameraPermission() else {
-            showCameraAccessAlert()
+            showAlert(at: .cameraAccess)
             return
         }
         
@@ -36,21 +36,13 @@ class MainViewController: UIViewController {
     private func requestCameraAccess() {
         AVCaptureDevice.requestAccess(for: .video) { (access) in
             if !access {
-                self.showCameraAccessAlert()
+                self.showAlert(at: .cameraAccess)
             }
         }
     }
     
-    private func showCameraAccessAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Разрешите приложению доступ к камере в настройках приложения", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func showQRReaderError() {
-        let alert = UIAlertController(title: "Ошибка", message: "Ошибка чтения QR, попробуйте позже", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    private func showAlert(at type: ErrorAlertType) {
+        self.present(type.alertController, animated: true, completion: nil)
     }
 }
 
@@ -60,6 +52,6 @@ extension MainViewController: QRCodeReaderDeleagte {
     }
     
     func showError() {
-        showQRReaderError()
+        showAlert(at: .qrReaderError)
     }
 }
