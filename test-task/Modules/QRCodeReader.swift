@@ -65,7 +65,6 @@ extension QRCodeReader: AVCaptureMetadataOutputObjectsDelegate {
 
         print(object.type)
         delegate?.getQRCode(qrCode: qrCode)
-        session.stopRunning()
-        video.removeFromSuperlayer()
+        stopRecording()
     }
 }
