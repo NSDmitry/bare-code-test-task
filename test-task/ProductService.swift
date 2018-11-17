@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ProductManagerProtocol {
-    func getProduct(at QRCode: String, success: ((ProductListResponse?) -> Void)?, failure: ((Error?) -> Void)?)
+    func getProduct(at QRCode: String, success: ((ProductListResponse) -> Void)?, failure: ((Error?) -> Void)?)
 }
 
 class ProductManager: ProductManagerProtocol {
@@ -21,7 +21,7 @@ class ProductManager: ProductManagerProtocol {
     private let baseURLString = "https://catalog.napolke.ru/search/catalog"
     private var task: URLSessionTask?
     
-    func getProduct(at QRCode: String, success: ((ProductListResponse?) -> Void)?, failure: ((Error?) -> Void)?) {
+    func getProduct(at QRCode: String, success: ((ProductListResponse) -> Void)?, failure: ((Error?) -> Void)?) {
         let url = URL(string: baseURLString)!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HTTPMethod.post.rawValue
@@ -33,8 +33,12 @@ class ProductManager: ProductManagerProtocol {
                 return
             }
             
-            let productList: ProductListResponse = try! JSONDecoder().decode(ProductListResponse.self, from: data)
-            success?(productList)
+            do {
+                let productList: ProductListResponse = try JSONDecoder().decode(ProductListResponse.self, from: data)
+                success?(productList)
+            } catch {
+                failure?(nil)
+            }
         }
         
         task?.resume()
@@ -48,20 +52,4 @@ class ProductManager: ProductManagerProtocol {
     }
 }
 
-struct ProductListResponse: Decodable {
-    let products: [Product]
-    
-    enum CodingKeys: String, CodingKey {
-        case products = "data"
-    }
-}
 
-struct Product: Decodable {
-    var imageUrls: [String]
-    var name: String
-    
-    enum CodingKeys: String, CodingKey {
-        case imageUrls = "images"
-        case name
-    }
-}

@@ -47,9 +47,8 @@ class MainViewController: UIViewController {
     }
     
     private func openProductDetail(at QRCode: String) {
-        productManager.getProduct(at: QRCode, success: { (data) in
-            guard let data = data else { return }
-            print(data)
+        productManager.getProduct(at: QRCode, success: { (productList) in
+            print(productList)
         }) { (error) in
             print(error ?? "неизвестная ошибка")
         }
