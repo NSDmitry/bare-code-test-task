@@ -11,28 +11,29 @@ import UIKit
 
 protocol QRCodeReaderDeleagte: class {
     func getQRCode(qrCode: String)
+    func showError()
 }
 
-class QRCodeReader: NSObject {
+protocol QRCodeReaderProtocol: AVCaptureMetadataOutputObjectsDelegate {
+    var delegate: QRCodeReaderDeleagte? { get set }
+    
+    func startRecording(in view: UIView)
+}
+
+class QRCodeReader: NSObject, QRCodeReaderProtocol {
     var delegate: QRCodeReaderDeleagte?
     
-    private let view: UIView
     private var video = AVCaptureVideoPreviewLayer()
     private let session = AVCaptureSession()
     
-    init(view: UIView) {
-        self.view = view
-    }
-    
-    func startRecordingQR() {
+    func startRecording(in view: UIView) {
         let captureDevice = AVCaptureDevice.default(for: .video)
         
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice!)
             session.addInput(input)
         } catch {
-            print("error")
-            // TODO: - add alert for error capture
+            delegate?.showError()
         }
         
         let output = AVCaptureMetadataOutput()
@@ -55,6 +56,7 @@ extension QRCodeReader: AVCaptureMetadataOutputObjectsDelegate {
             let qrCode = object.stringValue else {
                 return
         }
+
         print(object.type)
         delegate?.getQRCode(qrCode: qrCode)
         session.stopRunning()

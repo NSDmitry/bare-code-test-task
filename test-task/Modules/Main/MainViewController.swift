@@ -10,16 +10,14 @@ import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
-    
-    private var video = AVCaptureVideoPreviewLayer()
-    private var qrCodeReader: QRCodeReader?
+
+    private let qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         requestCameraAccess()
-        qrCodeReader = QRCodeReader(view: self.view)
-        qrCodeReader?.delegate = self
+        qrCodeReader.delegate = self
     }
 
     @IBAction func openCamera(_ sender: UIButton) {
@@ -28,7 +26,7 @@ class MainViewController: UIViewController {
             return
         }
         
-        qrCodeReader?.startRecordingQR()
+        qrCodeReader.startRecording(in: self.view)
     }
     
     private func checkCameraPermission() -> Bool {
@@ -53,5 +51,9 @@ class MainViewController: UIViewController {
 extension MainViewController: QRCodeReaderDeleagte {
     func getQRCode(qrCode: String) {
         print(qrCode)
+    }
+    
+    func showError() {
+        // TODO: - show camera error
     }
 }
