@@ -19,5 +19,7 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         
         descriptionLabel.text = product.name
+        let url = "https://img.napolke.ru/image/get?uuid=\(product.imageUrls.first!)" // TODO: - fix empty images
+        imageView.imageFromUrl(urlString: url)
     }
 }
