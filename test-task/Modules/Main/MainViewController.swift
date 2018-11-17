@@ -46,18 +46,31 @@ class MainViewController: UIViewController {
         self.present(type.alertController, animated: true, completion: nil)
     }
     
-    private func openProductDetail(at QRCode: String) {
+    private func downloadProductList(at QRCode: String) {
         productManager.getProduct(at: QRCode, success: { (productList) in
-            print(productList)
+            if productList.products.isEmpty {
+                // TODO: - show empty error
+            } else {
+                guard let firstProduct = productList.products.first else { return }
+                DispatchQueue.main.async {
+                    self.openProductDetail(firstProduct)
+                }
+            }
         }) { (error) in
             print(error ?? "неизвестная ошибка")
         }
+    }
+    
+    private func openProductDetail(_ product: Product) {
+        let productDetailViewController = ProductDetailViewController()
+        productDetailViewController.product = product
+        self.navigationController?.pushViewController(productDetailViewController, animated: true)
     }
 }
 
 extension MainViewController: QRCodeReaderDeleagte {
     func getQRCode(qrCode: String) {
-        openProductDetail(at: qrCode)
+        downloadProductList(at: qrCode)
     }
     
     func showError() {
