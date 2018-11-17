@@ -14,10 +14,11 @@ protocol QRCodeReaderDeleagte: class {
     func showError()
 }
 
-protocol QRCodeReaderProtocol: AVCaptureMetadataOutputObjectsDelegate {
+protocol QRCodeReaderProtocol {
     var delegate: QRCodeReaderDeleagte? { get set }
     
     func startRecording(in view: UIView)
+    func stopRecording()
 }
 
 class QRCodeReader: NSObject, QRCodeReaderProtocol {
@@ -46,6 +47,11 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
         view.layer.addSublayer(video)
         
         session.startRunning()
+    }
+    
+    func stopRecording() {
+        session.stopRunning()
+        video.removeFromSuperlayer()
     }
 }
 

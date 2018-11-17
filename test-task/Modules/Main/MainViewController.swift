@@ -11,7 +11,7 @@ import AVFoundation
 
 class MainViewController: UIViewController {
 
-    private let qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
+    private var qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
 
     override func viewDidLoad() {
         super.viewDidLoad()
