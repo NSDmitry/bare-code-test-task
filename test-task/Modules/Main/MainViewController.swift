@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
         qrCodeReader.delegate = self
     }
 
-    @IBAction func openCamera(_ sender: UIButton) {
+    @IBAction func openCamera(_ sender: QRReadingButton) {
         guard checkCameraPermission() else {
             showAlert(at: .cameraAccess)
             return
