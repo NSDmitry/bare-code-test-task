@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     private func description(isHidden: Bool) {
         let alpha: CGFloat = isHidden ? 0 : 1
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.descriptionView.alpha = alpha
         })
     }
