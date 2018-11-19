@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="test_task" customModuleProvider="target">
             <connections>
                 <outlet property="descriptionView" destination="8jP-5E-Dgw" id="g7C-Ig-kG4"/>
+                <outlet property="qrCodeFrame" destination="qhJ-ja-xOM" id="PfS-UY-Xad"/>
                 <outlet property="qrReadingButton" destination="6Z7-38-TNQ" id="x7a-Dc-v2q"/>
                 <outlet property="qrReadingView" destination="D2g-n9-d2s" id="GD9-gW-aW9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -42,7 +43,22 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2g-n9-d2s" userLabel="QRReadingView">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="263.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhJ-ja-xOM">
+                                    <rect key="frame" x="30" y="67" width="315" height="130"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="130" id="xcv-Gc-VUh"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="qhJ-ja-xOM" secondAttribute="trailing" constant="30" id="Deh-Pu-Ij5"/>
+                                <constraint firstItem="qhJ-ja-xOM" firstAttribute="centerX" secondItem="D2g-n9-d2s" secondAttribute="centerX" id="HYD-ou-sbg"/>
+                                <constraint firstItem="qhJ-ja-xOM" firstAttribute="centerY" secondItem="D2g-n9-d2s" secondAttribute="centerY" id="Y2V-xi-a3t"/>
+                                <constraint firstItem="qhJ-ja-xOM" firstAttribute="leading" secondItem="D2g-n9-d2s" secondAttribute="leading" constant="30" id="tRZ-M7-98S"/>
+                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-5E-Dgw" userLabel="descriptionView">
                             <rect key="frame" x="0.0" y="263.5" width="375" height="263.5"/>

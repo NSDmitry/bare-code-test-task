@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var qrReadingView: UIView!
     @IBOutlet private weak var descriptionView: UIView!
     @IBOutlet private weak var qrReadingButton: QRReadingButton!
+    @IBOutlet weak var qrCodeFrame: UIView!
     
     private var qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
     private let productManager: ProductManagerProtocol = ProductManager()
@@ -24,6 +25,12 @@ class MainViewController: UIViewController {
         requestCameraAccess()
         qrCodeReader.delegate = self
         self.descriptionView.alpha = 0
+        
+        qrCodeFrame.layer.borderColor = UIColor.white.cgColor
+        qrCodeFrame.layer.borderWidth = 3
+        qrCodeFrame.layer.cornerRadius = 3
+        
+        view.bringSubviewToFront(qrCodeFrame)
     }
 
     @IBAction func openCamera(_ sender: QRReadingButton) {
