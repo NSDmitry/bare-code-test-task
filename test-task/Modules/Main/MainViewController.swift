@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
 
     @IBOutlet private weak var qrReadingView: UIView!
     @IBOutlet private weak var descriptionView: UIView!
+    @IBOutlet private weak var qrReadingButton: QRReadingButton!
     
     private var qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
     private let productManager: ProductManagerProtocol = ProductManager()
@@ -84,6 +85,7 @@ extension MainViewController: QRCodeReaderDeleagte {
     func getQRCode(qrCode: String) {
         downloadProductList(at: qrCode)
         description(isHidden: true)
+        qrReadingButton.qrReadingState = .normal
     }
     
     func showError() {
