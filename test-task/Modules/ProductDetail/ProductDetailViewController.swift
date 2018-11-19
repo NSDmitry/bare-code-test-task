@@ -10,8 +10,9 @@ import UIKit
 
 class ProductDetailViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    private let productManager: ProductManagerProtocol = ProductManager()
     
     var product: Product!
     
@@ -19,12 +20,22 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         
         descriptionLabel.text = product.name
-
-        guard let imageUrl = product.imageUrls.first else {
-            return
-        }
+//        imageView.imageFromUrl(urlString: url)
         
-        let url = "https://img.napolke.ru/image/get?uuid=\(imageUrl)"
-        imageView.imageFromUrl(urlString: url)
+        productManager.productImage(at: product, success: { [weak self] (data) in
+            guard let imageData = data else {
+                self?.imageView.image = UIImage(named: "emptyImage")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self?.imageView.image = UIImage(data: imageData)
+            }
+            
+            }, failure: { (error) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.imageView.image = UIImage(named: "emptyImage")
+                }
+        })
     }
 }

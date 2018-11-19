@@ -10,6 +10,7 @@ import Foundation
 
 protocol ProductManagerProtocol {
     func getProduct(at QRCode: String, success: ((ProductListResponse) -> Void)?, failure: ((Error?) -> Void)?)
+    func productImage(at product: Product, success: ((Data?) -> Void)?, failure: ((Error?) -> Void)?)
 }
 
 class ProductManager: ProductManagerProtocol {
@@ -42,6 +43,24 @@ class ProductManager: ProductManagerProtocol {
         }
         
         task?.resume()
+    }
+    
+    func productImage(at product: Product, success: ((Data?) -> Void)?, failure: ((Error?) -> Void)?) {
+        guard let imageURL = product.imageUrls.first, let url = URL(string: "https://img.napolke.ru/image/get?uuid=\(imageURL)") else {
+                failure?(nil)
+                return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                failure?(error)
+                return
+            }
+            
+            success?(data)
+        }
+        
+        task.resume()
     }
     
     private func httpBody(at QRCode: String) -> Data? {

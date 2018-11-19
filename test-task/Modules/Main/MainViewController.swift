@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
 
         if sender.isReading {
             guard checkCameraPermission() else {
-                showAlert(at: .cameraAccess)
+                self.present(ErrorAlertFactory.cameraAccess.alert, animated: true, completion: nil)
                 return
             }
             
@@ -57,19 +57,15 @@ class MainViewController: UIViewController {
     private func requestCameraAccess() {
         AVCaptureDevice.requestAccess(for: .video) { (access) in
             if !access {
-                self.showAlert(at: .cameraAccess)
+                self.present(ErrorAlertFactory.cameraAccess.alert, animated: true, completion: nil)
             }
         }
-    }
-    
-    private func showAlert(at type: ErrorAlertType) {
-        self.present(type.alertController, animated: true, completion: nil)
     }
     
     private func downloadProductList(at QRCode: String) {
         productManager.getProduct(at: QRCode, success: { (productList) in
             if productList.products.isEmpty {
-                self.showAlert(at: .productNonFound)
+                self.present(ErrorAlertFactory.productNonFound.alert, animated: true, completion: nil)
             } else {
                 guard let firstProduct = productList.products.first else { return }
                 DispatchQueue.main.async {
@@ -77,7 +73,7 @@ class MainViewController: UIViewController {
                 }
             }
         }) { (error) in
-            print(error ?? "неизвестная ошибка")
+            self.present(ErrorAlertFactory.unknowError.alert, animated: true, completion: nil)
         }
     }
     
@@ -96,6 +92,6 @@ extension MainViewController: QRCodeReaderDeleagte {
     }
     
     func showError() {
-        showAlert(at: .qrReaderError)
+        self.present(ErrorAlertFactory.qrReaderError.alert, animated: true, completion: nil)
     }
 }

@@ -8,12 +8,13 @@
 
 import UIKit
 
-enum ErrorAlertType: String {
+enum ErrorAlertFactory: String {
     case cameraAccess = "Разрешите приложению доступ к камере в настройках приложения"
     case qrReaderError = "Ошибка чтения QR, попробуйте позже"
     case productNonFound = "Продукт не найден"
+    case unknowError = "Неизвестная ошибка, попробуйте позже"
     
-    var alertController: UIAlertController {
+    var alert: UIAlertController {
         let message = self.rawValue
         let alertViewController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         alertViewController.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
