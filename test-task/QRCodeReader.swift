@@ -26,6 +26,7 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
     
     private var video: AVCaptureVideoPreviewLayer?
     private var session: AVCaptureSession?
+    private var frameView: UIView?
     
     func startRecording(in view: UIView) {
         let session = AVCaptureSession()
@@ -55,11 +56,27 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
         DispatchQueue.global(qos: .userInitiated).async {
             session.startRunning()
         }
+        
+        addQRReaderFrame(view: view)
+    }
+    
+    private func addQRReaderFrame(view: UIView) {
+        let frameView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 60, height: 150))
+        self.frameView = frameView
+        frameView.center = view.center
+        frameView.backgroundColor = .clear
+        frameView.layer.borderColor = UIColor.white.cgColor
+        frameView.layer.borderWidth = 3
+        frameView.layer.cornerRadius = 6
+        
+        view.bringSubviewToFront(frameView)
+        view.layer.addSublayer(frameView.layer)
     }
     
     func stopRecording() {
         session?.stopRunning()
         video?.removeFromSuperlayer()
+        frameView?.removeFromSuperview()
         
         session = nil
         video = nil
