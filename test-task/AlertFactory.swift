@@ -11,6 +11,7 @@ import UIKit
 enum ErrorAlertType: String {
     case cameraAccess = "Разрешите приложению доступ к камере в настройках приложения"
     case qrReaderError = "Ошибка чтения QR, попробуйте позже"
+    case productNonFound = "Продукт не найден"
     
     var alertController: UIAlertController {
         let message = self.rawValue

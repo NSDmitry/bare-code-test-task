@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
         qrReadingButton.qrReadingState = .normal
     }
 
-    @IBAction func openCamera(_ sender: QRReadingButton) {        
+    @IBAction func openCamera(_ sender: QRReadingButton) {
         if sender.qrReadingState == .normal {
             guard checkCameraPermission() else {
                 showAlert(at: .cameraAccess)
@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
     private func downloadProductList(at QRCode: String) {
         productManager.getProduct(at: QRCode, success: { (productList) in
             if productList.products.isEmpty {
-                // TODO: - show empty error
+                self.showAlert(at: .productNonFound)
             } else {
                 guard let firstProduct = productList.products.first else { return }
                 DispatchQueue.main.async {
