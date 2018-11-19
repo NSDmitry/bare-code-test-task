@@ -54,7 +54,7 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
         
         session.startRunning()
         
-        DispatchQueue.global
+        // TODO: - start session in non main thread
     }
     
     func stopRecording() {

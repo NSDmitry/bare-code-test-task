@@ -12,15 +12,17 @@ import AVFoundation
 class MainViewController: UIViewController {
 
     @IBOutlet private weak var qrReadingView: UIView!
+    @IBOutlet private weak var descriptionView: UIView!
     
     private var qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
     private let productManager: ProductManagerProtocol = ProductManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         requestCameraAccess()
         qrCodeReader.delegate = self
+        self.descriptionView.alpha = 0
     }
 
     @IBAction func openCamera(_ sender: QRReadingButton) {
@@ -30,6 +32,14 @@ class MainViewController: UIViewController {
         }
         
         qrCodeReader.startRecording(in: self.qrReadingView)
+        description(isHidden: false)
+    }
+    
+    private func description(isHidden: Bool) {
+        let alpha: CGFloat = isHidden ? 0 : 1
+        UIView.animate(withDuration: 0.3, animations: {
+            self.descriptionView.alpha = alpha
+        })
     }
     
     private func checkCameraPermission() -> Bool {
@@ -73,6 +83,7 @@ class MainViewController: UIViewController {
 extension MainViewController: QRCodeReaderDeleagte {
     func getQRCode(qrCode: String) {
         downloadProductList(at: qrCode)
+        description(isHidden: true)
     }
     
     func showError() {
