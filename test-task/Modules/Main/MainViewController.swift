@@ -24,11 +24,12 @@ class MainViewController: UIViewController {
         requestCameraAccess()
         qrCodeReader.delegate = self
         self.descriptionView.alpha = 0
-        qrReadingButton.qrReadingState = .normal
     }
 
     @IBAction func openCamera(_ sender: QRReadingButton) {
-        if sender.qrReadingState == .normal {
+        sender.isReading.toggle()
+
+        if sender.isReading {
             guard checkCameraPermission() else {
                 showAlert(at: .cameraAccess)
                 return
@@ -40,8 +41,6 @@ class MainViewController: UIViewController {
             qrCodeReader.stopRecording()
             description(isHidden: true)
         }
-
-        qrReadingButton.buttonDidTapped()
     }
     
     private func description(isHidden: Bool) {
@@ -93,7 +92,7 @@ extension MainViewController: QRCodeReaderDeleagte {
     func getQRCode(qrCode: String) {
         downloadProductList(at: qrCode)
         description(isHidden: true)
-        qrReadingButton.qrReadingState = .normal
+        qrReadingButton.isReading = false
     }
     
     func showError() {

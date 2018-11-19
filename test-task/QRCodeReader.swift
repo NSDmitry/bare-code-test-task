@@ -51,9 +51,7 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
         
         video.frame = view.layer.bounds
         view.layer.addSublayer(video)
-        
-        // TODO: - start session in non main thread
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             session.startRunning()
         }

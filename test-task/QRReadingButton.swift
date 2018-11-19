@@ -8,24 +8,16 @@
 
 import UIKit
 
-// TODO: - remove states, add isQRReading
-
-enum QRReadingButtonState {
-    case normal
-    case QRReading
-}
-
 class QRReadingButton: UIButton {
     
-    var qrReadingState: QRReadingButtonState = .normal {
-        didSet {
-            switch qrReadingState {
-            case .normal:
-                self.backgroundColor = .blue
-                self.setTitle("Сканировать", for: .normal)
-            case .QRReading:
+    var isReading: Bool = false {
+        willSet {
+            if newValue {
                 self.backgroundColor = .red
                 self.setTitle("Остановить", for: .normal)
+            } else {
+                self.backgroundColor = .blue
+                self.setTitle("Сканировать", for: .normal)
             }
         }
     }
@@ -42,10 +34,6 @@ class QRReadingButton: UIButton {
     
     private func setup() {
         self.layer.cornerRadius = 10
-    }
-    
-    @objc func buttonDidTapped() {
-        let newState: QRReadingButtonState = qrReadingState == .normal ? .QRReading : .normal
-        self.qrReadingState = newState
+        isReading = false
     }
 }
