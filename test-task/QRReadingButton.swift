@@ -42,7 +42,6 @@ class QRReadingButton: UIButton {
     
     private func setup() {
         self.layer.cornerRadius = 10
-        self.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
     }
     
     @objc func buttonDidTapped() {

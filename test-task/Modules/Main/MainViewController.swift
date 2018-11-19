@@ -24,16 +24,24 @@ class MainViewController: UIViewController {
         requestCameraAccess()
         qrCodeReader.delegate = self
         self.descriptionView.alpha = 0
+        qrReadingButton.qrReadingState = .normal
     }
 
-    @IBAction func openCamera(_ sender: QRReadingButton) {
-        guard checkCameraPermission() else {
-            showAlert(at: .cameraAccess)
-            return
+    @IBAction func openCamera(_ sender: QRReadingButton) {        
+        if sender.qrReadingState == .normal {
+            guard checkCameraPermission() else {
+                showAlert(at: .cameraAccess)
+                return
+            }
+            
+            qrCodeReader.startRecording(in: self.qrReadingView)
+            description(isHidden: false)
+        } else {
+            qrCodeReader.stopRecording()
+            description(isHidden: true)
         }
-        
-        qrCodeReader.startRecording(in: self.qrReadingView)
-        description(isHidden: false)
+
+        qrReadingButton.buttonDidTapped()
     }
     
     private func description(isHidden: Bool) {
