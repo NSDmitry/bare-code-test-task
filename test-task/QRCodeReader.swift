@@ -44,12 +44,17 @@ class QRCodeReader: NSObject, QRCodeReaderProtocol {
         output.metadataObjectTypes = [.qr, .ean8, .ean13, .pdf417, .code128, .code39]
         
         let video = AVCaptureVideoPreviewLayer(session: session)
+        video.videoGravity = .resizeAspectFill
+        video.connection?.videoOrientation = .portrait
+        
         self.video = video
         
         video.frame = view.layer.bounds
         view.layer.addSublayer(video)
         
         session.startRunning()
+        
+        DispatchQueue.global
     }
     
     func stopRecording() {

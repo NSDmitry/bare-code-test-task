@@ -11,6 +11,8 @@ import AVFoundation
 
 class MainViewController: UIViewController {
 
+    @IBOutlet private weak var qrReadingView: UIView!
+    
     private var qrCodeReader: QRCodeReaderProtocol = QRCodeReader()
     private let productManager: ProductManagerProtocol = ProductManager()
 
@@ -27,7 +29,7 @@ class MainViewController: UIViewController {
             return
         }
         
-        qrCodeReader.startRecording(in: self.view)
+        qrCodeReader.startRecording(in: self.qrReadingView)
     }
     
     private func checkCameraPermission() -> Bool {

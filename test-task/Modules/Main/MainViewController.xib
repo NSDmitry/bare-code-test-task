@@ -12,16 +12,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="test_task" customModuleProvider="target">
             <connections>
+                <outlet property="qrReadingView" destination="D2g-n9-d2s" id="GD9-gW-aW9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Z7-38-TNQ" customClass="QRReadingButton" customModule="test_task" customModuleProvider="target">
-                    <rect key="frame" x="20" y="591" width="335" height="56"/>
+                    <rect key="frame" x="20" y="527" width="335" height="56"/>
                     <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="srO-Oh-INY"/>
@@ -34,13 +35,31 @@
                         <action selector="openCamera:" destination="-1" eventType="touchUpInside" id="8OV-X7-3se"/>
                     </connections>
                 </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7s4-yq-bFt">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="527"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2g-n9-d2s" userLabel="QRReadingView">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="263.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-5E-Dgw" userLabel="descriptionView">
+                            <rect key="frame" x="0.0" y="263.5" width="375" height="263.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="7s4-yq-bFt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1hT-eB-gnU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6Z7-38-TNQ" secondAttribute="trailing" constant="20" id="70E-9y-yAx"/>
+                <constraint firstItem="6Z7-38-TNQ" firstAttribute="top" secondItem="7s4-yq-bFt" secondAttribute="bottom" id="8ka-Ob-c4p"/>
                 <constraint firstItem="6Z7-38-TNQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="DWv-5N-362"/>
+                <constraint firstItem="7s4-yq-bFt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="W9n-9e-gu2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6Z7-38-TNQ" secondAttribute="bottom" constant="20" id="hv3-E6-hnE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7s4-yq-bFt" secondAttribute="trailing" id="uWY-7m-DX9"/>
             </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
