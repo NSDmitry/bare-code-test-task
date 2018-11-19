@@ -19,7 +19,12 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         
         descriptionLabel.text = product.name
-        let url = "https://img.napolke.ru/image/get?uuid=\(product.imageUrls.first!)" // TODO: - fix empty images
+
+        guard let imageUrl = product.imageUrls.first else {
+            return
+        }
+        
+        let url = "https://img.napolke.ru/image/get?uuid=\(imageUrl)"
         imageView.imageFromUrl(urlString: url)
     }
 }
